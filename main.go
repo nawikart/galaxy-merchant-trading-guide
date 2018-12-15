@@ -14,11 +14,11 @@ func main() {
     // handle static files in "assets" folder
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
     
-    // url Api for convertion between number and roman numerals
+    // route Api for convertion between number and roman numerals
     http.HandleFunc("/conversion", api.Conversion)
     
-    //
-	http.HandleFunc("/answer", api.Answer)
+    // route Api to showing the output for each queston
+	http.HandleFunc("/answer", api.Intergalactic)
 
     // frontend for user interface
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -32,5 +32,4 @@ func main() {
 
     fmt.Println("starting web server at http://localhost:8082/")
     http.ListenAndServe(":8082", nil)
-    // http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }

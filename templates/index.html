@@ -36,7 +36,7 @@
                                 
                                 <v-layout row v-for="(i, index) in testInputs2" :key="'b'+index">
                                     <v-flex xs4>
-                                        <v-text-field v-model="i.units" outline label="Units" hint='eg. "glob glob"' maxtlength="20" required></v-text-field>
+                                        <v-text-field v-model="i.units" outline label="Units" v-on:change="changeUnits(i.units, index)" hint='eg. "glob glob"' maxtlength="20" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs4>
                                         <v-text-field v-model="i.item" outline label="Item" v-on:change="changeItemName(i.item, index)" hint='do not use space' maxtlength="20" required></v-text-field>
@@ -53,7 +53,7 @@
                             <h3>Questions</h3>
                             <v-layout row wrap v-for="(i, index) in FAQs" :key="'c'+index" mb-4 mt-3 faqs>
                                 <v-flex xs12>
-                                    <v-text-field v-model="i.q" outline :label="(i.type=='number')?'How much is': ((i.type=='credits') ? 'how many Credits': 'Question')" :hint="i.hint" maxtlength="20" required></v-text-field>
+                                    <v-text-field v-model="i.q" v-on:change="changeQuestion(i.q, index)" outline :label="(i.type=='number')?'How much is': ((i.type=='credits') ? 'how many Credits': 'Question')" :hint="i.hint" maxtlength="20" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs6>
                                         <v-btn :loading="i.loading" dark color="blue" small v-on:click="getAnswer(index, i.type, i.q)">click for answer</v-btn>
@@ -166,7 +166,15 @@
                     if(!['i','v','x','l','c','d','m'].includes(romanS.toLowerCase())){
                         this.testInputs[i].romanS = 'I'
                     }
-                },               
+                },
+                changeQuestion(q, i){
+                    this.FAQs[i].q = q.trim().replace(/\s\s+/g, ' ');
+                },
+                changeUnits(units, i){
+                    this.testInputs2[i].units = units.trim().replace(/\s\s+/g, ' ');
+                },                
+
+                //string.replace(/\s\s+/g, ' ');               
                 addTestInput(){
                     this.testInputs.push({'unit': '', 'romanS': ''})
                 },

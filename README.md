@@ -1,5 +1,3 @@
-### "GoVersion": "go1.10"
-
 # GALAXY MERCHANT TRADING GUIDE
 
 
@@ -17,23 +15,28 @@ $ golang.exe (for windows)
 
 ###### run the application in browser
 go to http://localhost:8082/ on browser
-
+<br/><br/>
 
 
 ## DEMO: http://172.104.185.200:8082
+<br/><br/>
+
 
 ## Screenshot
 
-at first click allow when browser want to use GPS
+???
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss1.png)
+<br/><br/>
 
 
-
-here example i want to go McDonald Joglo, type the address on the top bar and click **search button**
+???
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss2.png)
+<br/><br/>
 
 
-
-
+???
 On image below will show the direction from user location to the destination
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss3.png)
+
+<br/><br/>
+### "GoVersion": "go1.10"

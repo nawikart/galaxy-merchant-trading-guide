@@ -35,7 +35,6 @@ Screenshot 2
 
 
 Screenshot 3
-On image below will show the direction from user location to the destination
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss3.png)
 
 <br/><br/><br/><br/>

@@ -1,0 +1,1 @@
+"GoVersion": "go1.10"

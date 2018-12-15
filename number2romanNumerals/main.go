@@ -31,7 +31,8 @@ func Convert(numberStr string) (interface{}, bool){
 			number = number % NnRS.Number // relocate the quotient remainder results between the "number" and "1000" "100" "10" back to "number" variable 
 
 			// The symbols "I", "X", "C", and "M" can be repeated three times in succession, but no more.
-			// it will be Invalid if "divi" for symbol "M" is more than 3
+			// for this case (base on intruction on pdf) it will be Invalid if "divi" for symbol "M" is more than 3
+			// so the maximum number allowed is 3999
 			if NnRS.RomanS == "M" && divi > 3 {
 				valid = false
 			}

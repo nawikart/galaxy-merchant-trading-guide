@@ -15,7 +15,10 @@ func main() {
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
     
     // url Api for convertion between number and roman numerals
-	http.HandleFunc("/convert", api.Api)	
+    http.HandleFunc("/conversion", api.Conversion)
+    
+    //
+	http.HandleFunc("/answer", api.Answer)
 
     // frontend for user interface
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

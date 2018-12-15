@@ -15,27 +15,61 @@
             <v-content>
 
                 <div id="e3" style="max-width: 400px; margin: auto;" class="grey lighten-3">
-                    <v-card-title class="grey lighten-3"> conversion between intergalactic units and roman numerals</v-card-title>
+                    <v-card-title class="grey lighten-3 bold"> conversion between intergalactic units and roman numerals</v-card-title>
 
                     <v-card>
                         <v-container fluid grid-list-lg>
-                            <v-form ref="form">
-                                <v-text-field  label="Romawi symbols" hint="eg. MMCCCXCIX" maxtlength="20" required></v-text-field>
-                            </v-form>
-                        </v-container>
+                            <h3 class="mb-3">Test Input: <a  v-show="!showTestInput"v-on:click="showTestInput=true">[edit]</a><a class="red--text" v-show="showTestInput"v-on:click="showTestInput=false">[close]</a></h3>
+                            <v-flex v-show="showTestInput">
+                                <v-layout row wrap row v-for="(i, index) in testInputs" :key="'a'+index">
+                                    <v-flex xs6>
+                                        <v-text-field v-model="i.unit" outline label="Unit name" hint='eg. "glob" "prok" "pish"' maxtlength="20" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs6>
+                                        <v-text-field v-model="i.romanS" outline label="Romawi symbols" hint='eg. "I" "V" "X" "L"' maxtlength="20" required></v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                                <v-flex xs12 text-xs-right><v-btn dark color="blue" small v-on:click="addTestInput()">add more</v-btn></v-flex>
+                                <hr />
+                                <p>&nbsp;</p>
 
-                        <v-card-actions>
-                            <b class="title blue--text">Result: 123345</b>
-                            <v-spacer></v-spacer>
-                            <v-btn color="blue" small dark>Convert</v-btn>
-                        </v-card-actions>
+                                
+                                <v-layout row v-for="(i, index) in testInputs2" :key="'b'+index">
+                                    <v-flex xs4>
+                                        <v-text-field v-model="i.units" outline label="Units" hint='eg. "glob glob"' maxtlength="20" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                        <v-text-field v-model="i.item" outline label="Item" hint='eg. "Silver"' maxtlength="20" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                        <v-text-field v-model="i.credits" outline label="Credits" hint='eg. "100"' maxtlength="20" required></v-text-field>
+                                    </v-flex>                                
+                                </v-layout>
+                                <v-flex text-xs-right><v-btn dark color="blue" small v-on:click="addTestInput2()">add more</v-btn></v-flex>
+                            </v-flex>
+                            <hr />                            
+                            <p>&nbsp;</p>
+
+                            <h3>Questions</h3>
+                            <v-layout row wrap v-for="(i, index) in FAQs" :key="'c'+index" mb-4 mt-3 faqs>
+                                <v-flex xs12>
+                                    <v-text-field v-model="i.q" outline :label="(i.type=='number')?'How much is': ((i.type=='credits') ? 'how many Credits': 'Question')" :hint="i.hint" maxtlength="20" required></v-text-field>
+                                </v-flex>
+                                <v-flex xs6>
+                                        <v-btn :loading="i.loading" dark color="blue" small v-on:click="getAnswer(index, i.type, i.q)">click for answer</v-btn>
+                                </v-flex>
+                                <v-flex xs6>
+                                    <div class="mt-2" v-html="i.a"></div>
+                                </v-flex>                                
+                            </v-layout>
+                        </v-container>
                     </v-card>
                 </div>
 
                 <div id="e3" style="max-width: 400px; margin: auto;" class="grey lighten-3 mt-3">
 
                     <v-card mt-4>
-                        <v-card-title class="grey lighten-3">Convert roman numerals to number</v-card-title>
+                        <v-card-title class="grey lighten-3 bold">conversion roman numerals to number</v-card-title>
                         <v-card-text fluid grid-list-lg>
 
                             <v-form ref="form2" lazy-validation>
@@ -54,7 +88,7 @@
                 <div id="e3" style="max-width: 400px; margin: auto;" class="grey lighten-3 mt-3">
 
                     <v-card mt-4>
-                        <v-card-title class="grey lighten-3">Convert number to roman numerals</v-card-title>
+                        <v-card-title class="grey lighten-3 bold">conversion number to roman numerals</v-card-title>
                         <v-card-text fluid grid-list-lg>
 
                             <v-form ref="form3" lazy-validation>
@@ -83,6 +117,26 @@
             el: '#app',
             data: () => ({                
                 loading_page: true,
+                showTestInput: false,
+
+                testInputs: [
+                    {'unit': 'glob', 'romanS': 'I'},
+                    {'unit': 'prok', 'romanS': 'V'},
+                    {'unit': 'pish', 'romanS': 'X'},
+                    {'unit': 'tegj', 'romanS': 'L'}
+                ],
+                testInputs2: [
+                    {'units': 'glob glob', 'item': 'Silver', 'credits': '34'},
+                    {'units': 'glob prok', 'item': 'Gold', 'credits': '57800'},
+                    {'units': 'pish pish', 'item': 'Iron', 'credits': '3910'}
+                ],
+                FAQs: [
+                    {'q': 'pish tegj glob glob', 'a': '', 'type': 'number', 'hint': 'eg. pish tegj glob glob', 'loading': false},
+                    {'q': 'glob prok Silver', 'a': '', 'type': 'credits', 'hint': 'eg. glob prok Silver', 'loading': false},
+                    {'q': 'glob prok Gold', 'a': '', 'type': 'credits', 'hint': 'eg. glob prok Gold', 'loading': false},
+                    {'q': 'glob prok Iron', 'a': '', 'type': 'credits', 'hint': 'eg. glob prok Iron', 'loading': false},
+                    {'q': 'wood could a woodchuck chuck if a woodchuck could chuck wood', 'a': '', 'type': 'number', 'loading': false},
+                ],       
 
                 r2nInput: '',
                 r2nLoading: false,
@@ -98,11 +152,41 @@
                 })          
             },
             methods: {
+                addTestInput(){
+                    this.testInputs.push({'unit': '', 'romanS': ''})
+                },
+                addTestInput2(){
+                    this.testInputs2.push({'units': '', 'item': '', 'credits': ''})
+                },
+                getAnswer(index, type, q){
+                    this.FAQs[index]['loading'] = true
+
+                        const axithis = this
+                        axios.post('/answer',
+                        {
+                            testInputs: JSON.stringify(this.testInputs),
+                            testInputs2: JSON.stringify(this.testInputs2),
+                            faq: JSON.stringify({'q': q, 'type': type})                 
+                        }).then(function (response) {                                
+                            // console.log(response.data)
+                            if(response.data.Valid){
+                                axithis.FAQs[index]['a'] = response.data.Value
+                            }else{
+                                axithis.FAQs[index]['a'] = '<span class="red--text">Invalid entry</span>'
+                            }                            
+                            axithis.FAQs[index]['loading'] = false
+
+                        }).catch(function (err) {
+                            console.log(err)
+                            alert('error')
+                            axithis.FAQs[index]['loading'] = false
+                        })                    
+                },              
                 romawi2romanMethod(){
                     if (this.$refs.form2.validate()) {
                         this.r2nLoading = true
                         const axithis = this
-                        axios.post('/convert',
+                        axios.post('/conversion',
                         {
                             input: this.r2nInput,
                             mod: 'romanNumerals2number'                 
@@ -126,7 +210,7 @@
                     if (this.$refs.form3.validate()) {
                         this.n2rLoading = true
                         const axithis = this
-                        axios.post('/convert',
+                        axios.post('/conversion',
                         {
                             input: this.n2rInput,
                             mod: 'number2romanNumerals'                 

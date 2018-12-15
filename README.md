@@ -24,17 +24,17 @@ go to http://localhost:8082/ on browser
 
 ## Screenshot
 
-???
+Screenshot 1
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss1.png)
 <br/><br/><br/><br/>
 
 
-???
+Screenshot 2
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss2.png)
 <br/><br/><br/><br/>
 
 
-???
+Screenshot 3
 On image below will show the direction from user location to the destination
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss3.png)
 

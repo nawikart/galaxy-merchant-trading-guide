@@ -19,24 +19,23 @@ go to http://localhost:8082/ on browser
 
 
 ## DEMO: http://172.104.185.200:8082
-<br/><br/>
+<br/>
 
 
 ## Screenshot
 
-???
+Screenshot 1
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss1.png)
-<br/><br/>
+<br/><br/><br/><br/>
 
 
-???
+Screenshot 2
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss2.png)
-<br/><br/>
+<br/><br/><br/><br/>
 
 
-???
-On image below will show the direction from user location to the destination
+Screenshot 3
 ![alt text](https://raw.githubusercontent.com/nawikart/README_IMAGES/master/galaxy/ss3.png)
 
-<br/><br/>
+<br/><br/><br/><br/>
 ### "GoVersion": "go1.10"

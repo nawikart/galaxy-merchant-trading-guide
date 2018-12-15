@@ -71,16 +71,22 @@ func Convert(symbols string) (interface{}, bool){
 				hvSubtraction = true
 			}
 			
-			
+			// previous symbol is a subtraction for currect symbol
+			// and if it's not same with allowed subtraction symbol, it is invalid
 			if allowedSubstraction(string(e)) != prevSymbol {
 				valid = false
 			}
 
+			// continue to add the value of each symbol deducted by previous number and previous two number
 			sum = sum + (romanS2number(string(e)) - prevNumber - prevNumber)
 		}else{
+
+			// if currect symbol is not bigger than previous symbol
+			// return the value to false
 			hvSubtraction = false
 			sum = sum + romanS2number(string(e))
 		}
+		
 		prevprevNumber = prevNumber
 		prevNumber = romanS2number(string(e))
 		prevSymbol = string(e)

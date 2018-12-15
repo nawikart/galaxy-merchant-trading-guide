@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GALAXY MERCHANT TRADING GUIDE </title>
+    <link href="/assets/css/vuetify.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">  
+</head>
+
+<body>
+    <div id="app">
+        <div id="loadingpage" v-if="loading_page"></div>
+        <v-app>
+            <v-content>
+
+                <div id="e3" style="max-width: 400px; margin: auto;" class="grey lighten-3">
+                    <v-card-title class="grey lighten-3"> conversion between intergalactic units and roman numerals</v-card-title>
+
+                    <v-card>
+                        <v-container fluid grid-list-lg>
+                            <v-form ref="form">
+                                <v-text-field  label="Romawi symbols" hint="eg. MMCCCXCIX" maxtlength="20" required></v-text-field>
+                            </v-form>
+                        </v-container>
+
+                        <v-card-actions>
+                            <b class="title blue--text">Result: 123345</b>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue" small dark>Convert</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </div>
+
+                <div id="e3" style="max-width: 400px; margin: auto;" class="grey lighten-3 mt-3">
+
+                    <v-card mt-4>
+                        <v-card-title class="grey lighten-3">Convert roman numerals to number</v-card-title>
+                        <v-card-text fluid grid-list-lg>
+
+                            <v-form ref="form2" lazy-validation>
+                                <v-text-field v-model="r2nInput" :rules="[v => !!v || 'Item is required']" label="Roman numerals" hint="eg. MMCCCXCIX" maxtlength="20" required></v-text-field>
+                            </v-form>
+                        </v-card-text>
+
+                        <v-card-actions>
+                            &nbsp; Result: <b class="ml-2 title green--text bold" v-html="r2nResult"></b>
+                            <v-spacer></v-spacer>
+                            <v-btn :loading="r2nLoading" color="blue" small dark v-on:click="romawi2romanMethod()">Convert</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </div>
+
+                <div id="e3" style="max-width: 400px; margin: auto;" class="grey lighten-3 mt-3">
+
+                    <v-card mt-4>
+                        <v-card-title class="grey lighten-3">Convert number to roman numerals</v-card-title>
+                        <v-card-text fluid grid-list-lg>
+
+                            <v-form ref="form3" lazy-validation>
+                                <v-text-field v-model="n2rInput" :rules="[v => !!v || 'Item is required']" label="Number" hint="eg. 2019" maxtlength="20" required></v-text-field>
+                            </v-form>
+                        </v-card-text>
+
+                        <v-card-actions>
+                            &nbsp; Result: <b class="ml-2 title green--text bold" v-html="n2rResult"></b>
+                            <v-spacer></v-spacer>
+                            <v-btn :loading="n2rLoading" color="blue" small v-on:click="roman2romawiMethod()" dark>Convert</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </div>
+
+            </v-content>
+        </v-app>
+    </div>
+
+    <script src="/assets/js/vue.js"></script>
+    <script src="/assets/js/vuetify.js"></script>
+    <script src="/assets/js/axios.min.js"></script>
+    <script>
+        new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: () => ({                
+                loading_page: true,
+
+                r2nInput: '',
+                r2nLoading: false,
+                r2nResult: '',
+                
+                n2rInput: '',
+                n2rLoading: false,     
+                n2rResult: '',     
+            }),
+            mounted(){
+                this.$nextTick(function () {          
+                this.loading_page = false
+                })          
+            },
+            methods: {
+                romawi2romanMethod(){
+                    if (this.$refs.form2.validate()) {
+                        this.r2nLoading = true
+                        const axithis = this
+                        axios.post('/convert',
+                        {
+                            input: this.r2nInput,
+                            mod: 'romanNumerals2number'                 
+                        }).then(function (response) {                                
+                            // console.log(response.data)
+                            if(response.data.Valid){
+                                axithis.r2nResult = response.data.Value
+                            }else{
+                                axithis.r2nResult = '<span class="red--text">Invalid entry</span>'
+                            }                            
+                            axithis.r2nLoading = false
+
+                        }).catch(function (err) {
+                            console.log(err)
+                            alert('error')
+                            axithis.r2nLoading = false
+                        })
+                    }                     
+                },
+                roman2romawiMethod(){
+                    if (this.$refs.form3.validate()) {
+                        this.n2rLoading = true
+                        const axithis = this
+                        axios.post('/convert',
+                        {
+                            input: this.n2rInput,
+                            mod: 'number2romanNumerals'                 
+                        }).then(function (response) {                                
+                            // console.log(response.data)
+                            if(response.data.Valid){
+                                axithis.n2rResult = response.data.Value
+                            }else{
+                                axithis.n2rResult = '<span class="red--text">Invalid entry</span>'
+                            }                            
+                            axithis.n2rLoading = false
+
+                        }).catch(function (err) {
+                            console.log(err)
+                            alert('error')
+                            axithis.n2rLoading = false
+                        })
+                    }                    
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -78,7 +78,7 @@ func Answer(w http.ResponseWriter, r *http.Request){
 
 		if json.Unmarshal(datatestInputs, &testInputs) == nil{
 			for _, e := range(testInputs){
-				mUnit2romanS[e.Unit] = e.RomanS
+				mUnit2romanS[strings.ToLower(e.Unit)] = e.RomanS
 			}
 		}
 
@@ -94,7 +94,7 @@ func Answer(w http.ResponseWriter, r *http.Request){
 					result.Value, result.Valid = nil, false
 					break					
 				}else{
-					mUnit2romanS2[e.Item] = float64(credits) / float64(number.(int64))
+					mUnit2romanS2[strings.ToLower(e.Item)] = float64(credits) / float64(number.(int64))
 				}
 			}
 		}
@@ -128,7 +128,7 @@ func Answer(w http.ResponseWriter, r *http.Request){
 				}				
 
 				if valid {
-					result.Value, result.Valid = mUnit2romanS2[qSplited[indItem]] * float64(romanV.(int64)), true
+					result.Value, result.Valid = mUnit2romanS2[strings.ToLower(qSplited[indItem])] * float64(romanV.(int64)), true
 				}else{
 					result.Value, result.Valid = nil, false
 				}
@@ -145,11 +145,11 @@ func units2number(units string, mUnit2romanS map[string]string) (interface{}, bo
 	romanS := ""
 	valid := true
 	for _, e := range(qSplited){
-		if mUnit2romanS[e] == "" {
+		if mUnit2romanS[strings.ToLower(e)] == "" {
 			valid = false
 			break
 		}else{
-			romanS = romanS + mUnit2romanS[e]
+			romanS = romanS + mUnit2romanS[strings.ToLower(e)]
 		}
 	}
 	if valid {

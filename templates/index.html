@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>GALAXY MERCHANT TRADING GUIDE </title>
+    <title>GALAXY MERCHANT TRADING GUIDE</title>
     <link href="/assets/css/vuetify.min.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">  
@@ -23,10 +23,10 @@
                             <v-flex v-show="showTestInput">
                                 <v-layout row wrap row v-for="(i, index) in testInputs" :key="'a'+index">
                                     <v-flex xs6>
-                                        <v-text-field v-model="i.unit" outline label="Unit name" hint='eg. "glob" "prok" "pish"' maxtlength="20" required></v-text-field>
+                                        <v-text-field v-model="i.unit" outline v-on:change="changeUnitName(i.unit, index)" label="Unit name" hint='do not use space' maxtlength="20" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs6>
-                                        <v-text-field v-model="i.romanS" outline label="Romawi symbols" hint='eg. "I" "V" "X" "L"' maxtlength="20" required></v-text-field>
+                                        <v-text-field v-model="i.romanS" :rules="romanSymbolRules" v-on:change="changeSymbol(i.romanS, index)" outline label="Romawi symbols" hint='eg. "I" "V" "X" "L"' maxtlength="20" required></v-text-field>
                                     </v-flex>
                                 </v-layout>
                                 <v-flex xs12 text-xs-right><v-btn dark color="blue" small v-on:click="addTestInput()">add more</v-btn></v-flex>
@@ -39,10 +39,10 @@
                                         <v-text-field v-model="i.units" outline label="Units" hint='eg. "glob glob"' maxtlength="20" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs4>
-                                        <v-text-field v-model="i.item" outline label="Item" hint='eg. "Silver"' maxtlength="20" required></v-text-field>
+                                        <v-text-field v-model="i.item" outline label="Item" v-on:change="changeItemName(i.item, index)" hint='do not use space' maxtlength="20" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs4>
-                                        <v-text-field v-model="i.credits" outline label="Credits" hint='eg. "100"' maxtlength="20" required></v-text-field>
+                                        <v-text-field v-model="i.credits" outline type="number" label="Credits" hint='eg. "100"' maxtlength="20" required></v-text-field>
                                     </v-flex>                                
                                 </v-layout>
                                 <v-flex text-xs-right><v-btn dark color="blue" small v-on:click="addTestInput2()">add more</v-btn></v-flex>
@@ -118,7 +118,10 @@
             data: () => ({                
                 loading_page: true,
                 showTestInput: false,
-
+                romanSymbolRules: [
+                    v => !!v || 'Name is required',
+                    v => (v && (['i','v','x','l','c','d','m'].includes(v.toLowerCase()))) || '"eg. "I" "V" "X" "L" "C" "D" "M"'
+                ],
                 testInputs: [
                     {'unit': 'glob', 'romanS': 'I'},
                     {'unit': 'prok', 'romanS': 'V'},
@@ -152,6 +155,18 @@
                 })          
             },
             methods: {
+                changeUnitName(u, i){
+                    this.testInputs[i].unit = u.replace(/[^a-zA-Z0-9]/g, "");
+                },
+                changeItemName(item, i){
+                    this.testInputs2[i].item = item.replace(/[^a-zA-Z0-9]/g, "");
+                },
+                changeSymbol(romanS, i){
+                    this.testInputs[i].romanS = this.testInputs[i].romanS.toUpperCase()
+                    if(!['i','v','x','l','c','d','m'].includes(romanS.toLowerCase())){
+                        this.testInputs[i].romanS = 'I'
+                    }
+                },               
                 addTestInput(){
                     this.testInputs.push({'unit': '', 'romanS': ''})
                 },

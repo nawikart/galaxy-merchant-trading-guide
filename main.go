@@ -30,7 +30,7 @@ func main() {
         t.Execute(w, nil)
     })
 
-    fmt.Println("starting web server at http://localhost:8080/")
-    http.ListenAndServe(":8080", nil)
+    fmt.Println("starting web server at http://localhost:8082/")
+    http.ListenAndServe(":8082", nil)
     // http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }

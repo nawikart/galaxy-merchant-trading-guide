@@ -62,7 +62,7 @@ func Convert(symbols string) (interface{}, bool){
 		// I = 1 : prevprevNumber
 		// X = 10 : prevNumber
 		// I = 1 : romanS2number(string(e))
-		if prevprevNumber != prevNumber && prevprevNumber == romanS2number(string(e)) {
+		if prevprevNumber < prevNumber && prevprevNumber == romanS2number(string(e)) {
 			valid = false
 		}
 

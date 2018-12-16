@@ -83,7 +83,7 @@ func Answer(data map[string]string) []byte{
 			// this is for question like "how many credits glob prok Gold?"
 			// firstly split it become "glob" "prok" Gold"
 			qSplited := strings.Split(q.Q, " ")
-			// grab last index to grab the last words --> "Gold"
+			// grab last index to get the last words --> "Gold"
 			indItem := len(qSplited)-1
 			var romanV interface{}
 			var valid bool
@@ -123,6 +123,8 @@ func Answer(data map[string]string) []byte{
 	return js
 }
 
+// a function for conversion units to number
+// eg. pish tegj glob glob --> 42
 func units2number(units string, mUnit2romanS map[string]string) (interface{}, bool){
 	qSplited := strings.Split(units, " ")
 	romanS := ""

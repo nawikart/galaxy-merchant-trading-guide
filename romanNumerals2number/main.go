@@ -47,7 +47,12 @@ func Convert(symbols string) (interface{}, bool){
 		// and if it is including one of the symbol that is not allowed to be repeated then it is invalid
 		if repeatedSymbolCount > 1 && utils.InArray(string(e), dlv)  {
 			valid = false
-
+		
+		// if current symbol same with previous simbol and the previous one is bigger than it's previous symbol
+		// eg. IXX <-- invalid
+		} else if repeatedSymbolCount > 1 && prevprevNumber > 0 && prevNumber > prevprevNumber{
+			valid = false
+					
 		// or any symbol repeated more than 3, it is invalid
 		}else  if repeatedSymbolCount > 3 {
 			valid = false

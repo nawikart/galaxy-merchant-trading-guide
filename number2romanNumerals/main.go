@@ -36,6 +36,7 @@ func Convert(numberStr string) (interface{}, bool){
 			if NnRS.RomanS == "M" && divi > 3 {
 				valid = false
 			}
+
 			if divi == 9 {
 				romanN = romanN + NnRS.RomanS + prevprevRomanS
 

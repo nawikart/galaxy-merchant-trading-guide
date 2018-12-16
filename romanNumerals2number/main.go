@@ -58,6 +58,14 @@ func Convert(symbols string) (interface{}, bool){
 			valid = false
 		}
 
+		// eg. IXI <-- invalid
+		// I = 1 : prevprevNumber
+		// X = 10 : prevNumber
+		// I = 1 : romanS2number(string(e))
+		if prevprevNumber != prevNumber && prevprevNumber == romanS2number(string(e)) {
+			valid = false
+		}
+
 		// if previous number of symbol > 0, mean this current symbol is not the first character
 		// and previous number lower than current number of symbol
 		if prevNumber > 0 && prevNumber < romanS2number(string(e)) {

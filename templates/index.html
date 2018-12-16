@@ -80,7 +80,7 @@
                         <v-card-actions>
                             &nbsp; Result: <b class="ml-2 title green--text bold" v-html="r2nResult"></b>
                             <v-spacer></v-spacer>
-                            <v-btn :loading="r2nLoading" color="blue" small dark v-on:click="romawi2romanMethod()">Convert</v-btn>
+                            <v-btn :loading="r2nLoading" color="blue" small dark v-on:click="r2nMethod()">Convert</v-btn>
                         </v-card-actions>
                     </v-card>
                 </div>
@@ -99,7 +99,7 @@
                         <v-card-actions>
                             &nbsp; Result: <b class="ml-2 title green--text bold" v-html="n2rResult"></b>
                             <v-spacer></v-spacer>
-                            <v-btn :loading="n2rLoading" color="blue" small v-on:click="roman2romawiMethod()" dark>Convert</v-btn>
+                            <v-btn :loading="n2rLoading" color="blue" small v-on:click="n2rMethod()" dark>Convert</v-btn>
                         </v-card-actions>
                     </v-card>
                 </div>
@@ -205,7 +205,7 @@
                             axithis.FAQs[index]['loading'] = false
                         })                    
                 },              
-                romawi2romanMethod(){
+                r2nMethod(){
                     if (this.$refs.form2.validate()) {
                         this.r2nLoading = true
                         const axithis = this
@@ -229,8 +229,12 @@
                         })
                     }                     
                 },
-                roman2romawiMethod(){
+                n2rMethod(){
                     if (this.$refs.form3.validate()) {
+                        if(parseInt(this.n2rInput) > 3999){
+                            this.n2rResult = '<span class="red--text">max. 3999</span>'
+                            return false
+                        }
                         this.n2rLoading = true
                         const axithis = this
                         axios.post('/conversion',

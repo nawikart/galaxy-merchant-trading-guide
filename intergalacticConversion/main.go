@@ -5,6 +5,7 @@ import (
 		"../romanNumerals2number"
 		"strings"
 		"strconv"
+		"fmt"
 		)
 
 var js []byte
@@ -111,8 +112,11 @@ func Answer(data map[string]string) []byte{
 				romanV, valid = romanNumerals2number.Convert(romanS)
 			}				
 
-			if valid {
+			if valid && result.Valid {
 				result.Value, result.Valid = mItem2Credits[strings.ToLower(qSplited[indItem])] * float64(romanV.(int64)), true
+				if fmt.Sprintf("%v", result.Value) == "0" {
+					result.Value, result.Valid = nil, false
+				}
 			}else{
 				result.Value, result.Valid = nil, false
 			}
